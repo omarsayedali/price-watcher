@@ -42,21 +42,9 @@ Track product prices across Walmart and AliExpress. Get instant alerts on price 
 - Lucide Icons
 - Custom CSS (Dark theme)
 
----
 
-## 📸 Screenshots
 
-### Dashboard
-![Dashboard Preview](<img width="1901" height="826" alt="Screenshot 2025-12-17 163429" src="https://github.com/user-attachments/assets/6d6a268f-0695-4232-80c6-78ca98021181" />
-)
-*Add your screenshot after deployment*
 
-### Price Chart
-![Chart Preview](<img width="1909" height="824" alt="Screenshot 2025-12-17 163456" src="https://github.com/user-attachments/assets/a3f55a31-981a-4483-83e2-2d256f7b62d2" />
-)
-*Add your screenshot after deployment*
-
----
 
 ## 🚀 Quick Start
 
