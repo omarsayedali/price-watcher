@@ -5,16 +5,48 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 import re
+import os
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
 
 def init_driver():
-    """Undetected ChromeDriver - auto-detect Chrome version"""
-    options = uc.ChromeOptions()
-    options.add_argument('--headless=new')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    
-    # Don't specify version - let it auto-detect
-    driver = uc.Chrome(options=options, use_subprocess=True)
+    """
+    Hybrid Driver: 
+    - Uses undetected_chromedriver locally (Best for evasion).
+    - Uses standard Selenium on Railway (Best for stability/Docker).
+    """
+    # 1. Define Options
+    if os.environ.get('CHROME_BIN'):
+        # --- RAILWAY / DOCKER MODE ---
+        print("🚀 DETECTED RAILWAY ENVIRONMENT. Switching to Standard Selenium.")
+        
+        options = webdriver.ChromeOptions()
+        options.binary_location = os.environ.get('CHROME_BIN') # Points to /usr/bin/chromium
+        
+        # Critical Flags for Docker
+        options.add_argument('--headless') 
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-gpu')
+        
+        # Spoof User-Agent to look real
+        options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+        
+        service = Service(executable_path=os.environ.get('CHROMEDRIVER_PATH'))
+        driver = webdriver.Chrome(service=service, options=options)
+        
+    else:
+        # --- LOCAL LAPTOP MODE ---
+        print("💻 DETECTED LOCAL ENVIRONMENT. Using Undetected Chrome.")
+        
+        options = uc.ChromeOptions()
+        options.add_argument('--headless=new') # Or remove if you want to see the browser
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        
+        driver = uc.Chrome(options=options, use_subprocess=True)
+
     return driver
 
 def scrape_with_selenium(url):
