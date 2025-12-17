@@ -3,7 +3,7 @@ from models import db, Product, PriceHistory
 from config import Config
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-
+import os
 app = Flask(__name__)
 app.config.from_object(Config)
 
